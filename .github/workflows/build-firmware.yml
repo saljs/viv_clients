@@ -8,6 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
+      - name: Check path
+        run: echo $PATH; mkdir -p ~/.local/bin
       - name: Install arduino CLI
         run: curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | BINDIR=~/.local/bin sh
       - name: Install build dependencies
