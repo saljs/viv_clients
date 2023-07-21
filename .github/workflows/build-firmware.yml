@@ -1,0 +1,16 @@
+name: build-firmware
+run-name: ${{ github.actor }} is building firmware.
+on:
+  push:
+    branches: [ "main" ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Install arduino CLI
+        run: curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | BINDIR=~/.local/bin sh
+      - name: Install build dependencies
+        run: make install_libs
+      - name: Build firmware
+        run: make all
