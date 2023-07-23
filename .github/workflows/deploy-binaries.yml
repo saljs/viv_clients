@@ -6,8 +6,7 @@ on: release
 
 jobs:
   build:
-   - name: Build firmware
-     uses: saljs/viv_clients/.github/workflows/build-firmware.yml@main
+    uses: saljs/viv_clients/.github/workflows/build-firmware.yml@main
 
   deploy:
     runs-on: ubuntu-latest
