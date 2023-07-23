@@ -1,16 +1,24 @@
 # Workflow to deploy binaries to a zip file in release
 
 name: deploy-binaries
-run-name: ${{ github.actor }} is deploying binaries.
+run-name: ${{ github.actor }} is building firmware.
 on: release
 
 jobs:
   build:
-    uses: saljs/viv_clients/.github/workflows/build-firmware.yml@main
-
-  deploy:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@master
+        with:
+          submodules: recursive
+      - name: Create bin directory
+        run: mkdir -p ~/.local/bin
+      - name: Install arduino CLI
+        run: curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | BINDIR=~/.local/bin sh
+      - name: Install build dependencies
+        run: make install_libs
+      - name: Build firmware
+        run: make all
       - name: Create firmware archive
         run: cd build/; zip fw_bundle.zip *.bin
       - name: Deploy release
