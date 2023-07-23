@@ -1,0 +1,3 @@
+[submodule "VivariumMonitor"]
+	path = VivariumMonitor
+	url = https://github.com/saljs/VivariumMonitor
