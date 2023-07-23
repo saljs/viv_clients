@@ -5,11 +5,13 @@ run-name: ${{ github.actor }} is deploying binaries.
 on: release
 
 jobs:
+  build:
+   - name: Build firmware
+     uses: saljs/viv_clients/.github/workflows/build-firmware.yml@main
+
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Build firmware
-        uses: saljs/viv_clients/.github/workflows/build-firmware.yml@main
       - name: Create firmware archive
         run: cd build/; zip fw_bundle.zip *.bin
       - name: Deploy release
