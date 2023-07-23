@@ -1,9 +1,0 @@
-board_manager:
-  additional_urls:
-  - https://arduino.esp8266.com/stable/package_esp8266com_index.json
-library:
-  enable_unsafe_install: true
-sketch:
-  always_export_binaries: true
-updater:
-  enable_notification: false

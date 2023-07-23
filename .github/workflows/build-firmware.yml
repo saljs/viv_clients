@@ -8,6 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
+        with:
+          submodules: 'true'
       - name: Create bin directory
         run: mkdir -p ~/.local/bin
       - name: Install arduino CLI
@@ -18,7 +20,8 @@ jobs:
         run: make all
       - name: Create firmware archive
         run: cd build/; zip fw_bundle.zip *.bin
-      - uses: JasonEtco/upload-to-release@master
+      - name: Deploy release
+        uses: JasonEtco/upload-to-release@master
         with:
           args: build/fw_bundle.zip
         env:
