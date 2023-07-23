@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
         with:
-          submodules: 'true'
+          submodules: recursive
       - name: Create bin directory
         run: mkdir -p ~/.local/bin
       - name: Install arduino CLI
