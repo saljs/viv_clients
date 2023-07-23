@@ -1,0 +1,20 @@
+# Workflow to deploy binaries to a zip file in release
+
+name: deploy-binaries
+run-name: ${{ github.actor }} is deploying binaries.
+on: release
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build firmware
+        uses: ./.github/workflows/build-firmware.yml
+      - name: Create firmware archive
+        run: cd build/; zip fw_bundle.zip *.bin
+      - name: Deploy release
+        uses: JasonEtco/upload-to-release@master
+        with:
+          args: build/fw_bundle.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

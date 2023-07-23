@@ -1,8 +1,9 @@
+# Workflow to build all firmwares
+
 name: build-firmware
 run-name: ${{ github.actor }} is building firmware.
-on:
-  push:
-    branches: [ "main" ]
+on: workflow_call
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -18,11 +19,3 @@ jobs:
         run: make install_libs
       - name: Build firmware
         run: make all
-      - name: Create firmware archive
-        run: cd build/; zip fw_bundle.zip *.bin
-      - name: Deploy release
-        uses: JasonEtco/upload-to-release@master
-        with:
-          args: build/fw_bundle.zip
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
