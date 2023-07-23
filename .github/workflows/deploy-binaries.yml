@@ -2,7 +2,9 @@
 
 name: deploy-binaries
 run-name: ${{ github.actor }} is building firmware.
-on: release
+on:
+  release:
+    types: [created]
 
 jobs:
   build:
