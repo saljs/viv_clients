@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build firmware
-        uses: ./.github/workflows/build-firmware.yml
+        uses: saljs/viv_clients/.github/workflows/build-firmware.yml@main
       - name: Create firmware archive
         run: cd build/; zip fw_bundle.zip *.bin
       - name: Deploy release
