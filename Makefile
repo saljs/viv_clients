@@ -2,7 +2,7 @@ BOARDS=https://arduino.esp8266.com/stable/package_esp8266com_index.json
 FQBN=esp8266:esp8266:d1_mini_clone
 
 SRC_FILES=$(wildcard */*.ino)
-LIB_VERSION=$(shell grep version VivariumMonitor/library.properties | sed 's/version=\s*//')
+LIB_VERSION=$(shell grep -e '^ *version *=' VivariumMonitor/library.properties | sed 's/version=\s*//')
 
 all: $(SRC_FILES)
 
