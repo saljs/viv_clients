@@ -14,7 +14,7 @@ $(SRC_FILES): build
 	arduino-cli compile \
 		--library VivariumMonitor \
 		--export-binaries \
-		--build-property "build.extra_flags=\"-DFIRMWARE_VERSION=\"\$(FW_VERSION)\"\"" \
+		--build-property "build.extra_flags=\"-DFIRMWARE_VERSION=\"$(FW_VERSION)\"\"" \
 		--fqbn $(FQBN) \
 		$(dir $@)
 	cp $(dir $@)build/$(subst :,.,$(FQBN))/$(notdir $@).bin build/$(FW_VERSION).bin
