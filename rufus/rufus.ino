@@ -78,7 +78,7 @@ byte analog_handler(SensorData reading)
   struct tm* timeinfo;
   timeinfo = localtime(&reading.timestamp);
   if (timeinfo->tm_hour > 7 && timeinfo->tm_hour < 20) {
-    return heat_controller.add_reading(reading.high_temp);
+    return max((byte)5, heat_controller.add_reading(reading.high_temp));
   }
   return 0;
 }
