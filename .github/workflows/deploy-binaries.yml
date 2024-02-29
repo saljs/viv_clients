@@ -21,6 +21,8 @@ jobs:
         run: make install_libs
       - name: Build firmware
         run: make all
+      - name: Build firmware (debug)
+        run: make DEBUG=true all
       - name: Create firmware archive
         run: cd build/; zip fw_bundle.zip *.bin
       - name: Deploy release
