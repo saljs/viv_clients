@@ -15,6 +15,7 @@ void setup() {
   VivariumMonitorConfig config = {
     .has_sht_sensor = true,
     .num_therm_sensors = 0,
+    .sample_interval = 10,
     .ntp_zone = "CST6CDT,M3.2.0,M11.1.0",
     .ntp_server = "pool.ntp.org",
     .stats_url = stats_url,

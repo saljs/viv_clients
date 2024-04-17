@@ -17,6 +17,7 @@ void setup() {
   VivariumMonitorConfig config = {
     .has_sht_sensor = true,
     .num_therm_sensors = 1,
+    .sample_interval = 10,
     .ntp_zone = "CST6CDT,M3.2.0,M11.1.0",
     .ntp_server = "pool.ntp.org",
     .stats_url = stats_url,
@@ -54,14 +55,14 @@ byte digital_1_handler(SensorData reading)
 
 /*
  * Handler for mister:
- *   Turn on for 16 seconds at 9am and 9pm
+ *   Turn on for 8 seconds at 9am and 9pm
  */
 byte digital_2_handler(SensorData reading)
 {
   struct tm* timeinfo;
   timeinfo = localtime(&reading.timestamp);
   if ( (timeinfo->tm_hour == 9 || timeinfo->tm_hour == 21)
-      && timeinfo->tm_min == 0 && timeinfo->tm_sec < 16
+      && timeinfo->tm_min == 0 && timeinfo->tm_sec < 8
   ) {
     return 1;    
   }

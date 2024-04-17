@@ -3,7 +3,7 @@
 #include <ESP8266WiFi.h>
 
 VivariumMonitor monitor;
-PIDController heat_controller(37.0, 14.6, 9.5, 3.2, 0.8);
+PIDController heat_controller(35.0, 14.6, 9.5, 3.2, 0.8);
 
 void setup() {
   DEBUG_MSG("Vivarium Monitor firmware " FIRMWARE_VERSION);
@@ -17,6 +17,7 @@ void setup() {
   VivariumMonitorConfig config = {
     .has_sht_sensor = true,
     .num_therm_sensors = 2,
+    .sample_interval = 10,
     .ntp_zone = "CST6CDT,M3.2.0,M11.1.0",
     .ntp_server = "pool.ntp.org",
     .stats_url = stats_url,
