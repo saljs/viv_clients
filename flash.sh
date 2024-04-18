@@ -2,7 +2,7 @@
 
 BIN="$1"
 FQBN=$(grep "FQBN=" Makefile | sed 's/FQBN=//')
-PORT=${2:-"/dev/ttypUSB0"}
+PORT=${2:-"/dev/ttyUSB0"}
 
 if [ -z $BIN ]; then
     echo "Error: firmware file required."
@@ -10,4 +10,4 @@ if [ -z $BIN ]; then
 fi
 
 echo "Flashing $BIN to $PORT"
-arduino-cli upload  -p /dev/ttyUSB0 -b $FQBN -p $PORT -i $BIN
+arduino-cli upload -b $FQBN -p $PORT -i $BIN
