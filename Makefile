@@ -1,5 +1,5 @@
 BOARDS=https://arduino.esp8266.com/stable/package_esp8266com_index.json
-FQBN=esp8266:esp8266:d1_mini_clone:xtal=80,vt=flash,exception=disabled,stacksmash=disabled,ssl=all,mmu=3232,non32xfer=fast,FlashMode=dout,FlashFreq=40,eesz=4M2M,ip=lm2f,dbg=Disabled
+FQBN=esp8266:esp8266:d1_mini_clone
 
 SRC_FILES=$(wildcard */*.ino)
 LIB_VERSION=$(shell grep -e '^ *version *=' VivariumMonitor/library.properties | sed 's/version=\s*//')
@@ -15,7 +15,7 @@ ifdef DEBUG
 	arduino-cli compile \
 		--library VivariumMonitor \
 		--export-binaries \
-		--build-property "build.extra_flags=\"-DFIRMWARE_VERSION=\"$(FW_VERSION)\"\"" \
+		--build-property "build.extra_flags=\"-DFIRMWARE_VERSION=\"debug_$(FW_VERSION)\"\"" \
 		--fqbn $(FQBN):lvl=CORE \
 		--optimize-for-debug \
 		$(dir $@)
