@@ -43,10 +43,10 @@ void loop() {
  * Handler for LEDs:
  *   Turn on between 8am and 8pm
  */
-byte digital_1_handler(SensorData reading)
+byte digital_1_handler(SensorData reading, time_t now)
 {
   struct tm* timeinfo;
-  timeinfo = localtime(&reading.timestamp);
+  timeinfo = localtime(&now);
   if (timeinfo->tm_hour > 7 && timeinfo->tm_hour < 20) {
     return 1;
   }
@@ -55,14 +55,14 @@ byte digital_1_handler(SensorData reading)
 
 /*
  * Handler for mister:
- *   Turn on for 8 seconds at 9am and 9pm
+ *   Turn on for 4 seconds at 9am and 9pm
  */
-byte digital_2_handler(SensorData reading)
+byte digital_2_handler(SensorData reading, time_t now)
 {
   struct tm* timeinfo;
-  timeinfo = localtime(&reading.timestamp);
+  timeinfo = localtime(&now);
   if ( (timeinfo->tm_hour == 9 || timeinfo->tm_hour == 21)
-      && timeinfo->tm_min == 0 && timeinfo->tm_sec < 8
+      && timeinfo->tm_min == 0 && timeinfo->tm_sec < 4
   ) {
     return 1;    
   }
@@ -73,7 +73,7 @@ byte digital_2_handler(SensorData reading)
  *  Hander for Heat pad:
  *    Apply PID controller based on high temp
  */
-byte analog_handler(SensorData reading)
+byte analog_handler(SensorData reading, time_t now)
 {
-  return heat_controller.add_reading(reading.high_temp);
+  return heat_controller.add_reading(reading.high_temp, reading.timestamp);
 }

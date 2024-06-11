@@ -3,7 +3,7 @@
 #include <ESP8266WiFi.h>
 
 VivariumMonitor monitor;
-PIDController heat_controller(41.0, 5.6, 3.5, 1.2, 0.8);
+PIDController heat_controller(41.0, 4.6, 3.5, 1.2, 0.8);
 
 void setup() {
   DEBUG_MSG("Vivarium Monitor firmware " FIRMWARE_VERSION);
@@ -43,10 +43,10 @@ void loop() {
  * Handler for UVB lamp:
  *   Turn on between 8am and 8pm
  */
-byte digital_1_handler(SensorData reading)
+byte digital_1_handler(SensorData reading, time_t now)
 {
   struct tm* timeinfo;
-  timeinfo = localtime(&reading.timestamp);
+  timeinfo = localtime(&now);
   if (timeinfo->tm_hour > 7 && timeinfo->tm_hour < 20) {
     return 1;
   }
@@ -56,7 +56,7 @@ byte digital_1_handler(SensorData reading)
 /*
  * Not used
  */
-byte digital_2_handler(SensorData reading)
+byte digital_2_handler(SensorData reading, time_t now)
 {
   return 0;
 }
@@ -65,12 +65,12 @@ byte digital_2_handler(SensorData reading)
  * Handler for halogen lamp
  *    Apply PID controller between 8am and 8pm
  */
-byte analog_handler(SensorData reading)
+byte analog_handler(SensorData reading, time_t now)
 {
   struct tm* timeinfo;
-  timeinfo = localtime(&reading.timestamp);
+  timeinfo = localtime(&now);
   if (timeinfo->tm_hour > 7 && timeinfo->tm_hour < 20) {
-    return max((byte)5, heat_controller.add_reading(reading.high_temp));
+    return heat_controller.add_reading(reading.high_temp, reading.timestamp);
   }
   return 0;
 }

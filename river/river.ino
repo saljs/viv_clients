@@ -43,10 +43,10 @@ void loop() {
  * Handler for UVB lamp:
  *   Turn on between 8am and 8pm
  */
-byte digital_1_handler(SensorData reading)
+byte digital_1_handler(SensorData reading, time_t now)
 {
   struct tm* timeinfo;
-  timeinfo = localtime(&reading.timestamp);
+  timeinfo = localtime(&now);
   if (timeinfo->tm_hour > 7 && timeinfo->tm_hour < 20) {
     return 1;
   }
@@ -57,10 +57,10 @@ byte digital_1_handler(SensorData reading)
  * Handler for halogen lamp:
  *   Turn on between 8:30am and 7:30pm
  */
-byte digital_2_handler(SensorData reading)
+byte digital_2_handler(SensorData reading, time_t now)
 {
   struct tm* timeinfo;
-  timeinfo = localtime(&reading.timestamp);
+  timeinfo = localtime(&now);
   if ( (timeinfo->tm_hour > 8 || (timeinfo->tm_hour  == 8 && timeinfo->tm_min >= 30)) 
       && (timeinfo->tm_hour < 19 || (timeinfo->tm_hour == 19 && timeinfo->tm_min < 30))
   ) {
@@ -73,7 +73,7 @@ byte digital_2_handler(SensorData reading)
  *  Hander for CHE:
  *    Apply PID controller based on high temp
  */
-byte analog_handler(SensorData reading)
+byte analog_handler(SensorData reading, time_t now)
 {
-  return heat_controller.add_reading(reading.high_temp);
+  return heat_controller.add_reading(reading.high_temp, reading.timestamp);
 }

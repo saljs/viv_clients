@@ -30,6 +30,16 @@ else
 	cp $(dir $@)build/$(subst :,.,$(FQBN))/$(notdir $@).bin build/$(FW_VERSION).bin
 endif
 
+hardwaretest: build
+	arduino-cli compile \
+		--library VivariumMonitor \
+		--export-binaries \
+		--build-property "build.extra_flags=\"-DFIRMWARE_VERSION=\"HARDWARETEST\"\"" \
+		--fqbn $(FQBN):lvl=CORE \
+		--optimize-for-debug \
+		VivariumMonitor/examples/HardwareTest
+	cp VivariumMonitor/examples/HardwareTest/build/$(subst :,.,$(FQBN))/HardwareTest.ino.bin build/HardwareTest.bin
+
 install_libs:
 	arduino-cli core update-index --additional-urls "$(BOARDS)"
 	arduino-cli core install esp8266:esp8266 --additional-urls "$(BOARDS)"
@@ -40,4 +50,4 @@ clean:
 	rm -r build
 	rm -r */build/
 
-.PHONY: all install_lib clean $(SRC_FILES)
+.PHONY: all install_lib clean hardwaretest $(SRC_FILES)
