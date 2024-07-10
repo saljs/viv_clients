@@ -3,7 +3,7 @@
 #include <ESP8266WiFi.h>
 
 VivariumMonitor monitor;
-PIDController heat_controller(27.0, 11.9, 8.5, 3.2, 0.6);
+PIDController heat_controller(27.0, 10.9, 8.5, 3.2, 0.6);
 
 void setup() {
   DEBUG_MSG("Vivarium Monitor firmware " FIRMWARE_VERSION);

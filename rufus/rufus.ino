@@ -3,7 +3,7 @@
 #include <ESP8266WiFi.h>
 
 VivariumMonitor monitor;
-PIDController heat_controller(35.0, 14.6, 9.5, 3.2, 0.8);
+PIDController heat_controller(18.0, 14.6, 9.5, 3.2, 0.8);
 
 void setup() {
   DEBUG_MSG("Vivarium Monitor firmware " FIRMWARE_VERSION);
@@ -55,7 +55,7 @@ byte digital_1_handler(SensorData reading, time_t now)
 
 /*
  * Handler for downstairs misting system
- *    Turn on for 6 seconds three times a day:
+ *    Turn on for 10 seconds three times a day:
  *      10pm, 6am, and 2pm
  */
 byte digital_2_handler(SensorData reading, time_t now)
@@ -63,7 +63,7 @@ byte digital_2_handler(SensorData reading, time_t now)
   struct tm* timeinfo;
   timeinfo = localtime(&now);
   if ( (timeinfo->tm_hour == 6 || timeinfo->tm_hour == 14 || timeinfo->tm_hour == 22)
-      && timeinfo->tm_min == 0 && timeinfo->tm_sec < 6
+      && timeinfo->tm_min == 0 && timeinfo->tm_sec < 10
   ) {
     return 1;
   }
