@@ -19,7 +19,7 @@ void setup() {
     .ntp_zone = "CST6CDT,M3.2.0,M11.1.0",
     .ntp_server = "pool.ntp.org",
     .stats_url = stats_url,
-    .stats_interval = 600,
+    .stats_interval = 300,
   };
  
   // Set hostname

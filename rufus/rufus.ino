@@ -3,7 +3,7 @@
 #include <ESP8266WiFi.h>
 
 VivariumMonitor monitor;
-PIDController heat_controller(18.0, 14.6, 9.5, 3.2, 0.8);
+PIDController heat_controller(38.0, 4.6, 2.5, 1.2, 0.8);
 
 void setup() {
   DEBUG_MSG("Vivarium Monitor firmware " FIRMWARE_VERSION);
@@ -21,7 +21,7 @@ void setup() {
     .ntp_zone = "CST6CDT,M3.2.0,M11.1.0",
     .ntp_server = "pool.ntp.org",
     .stats_url = stats_url,
-    .stats_interval = 600,
+    .stats_interval = 300,
   };
 
   // Set hostname
@@ -65,6 +65,7 @@ byte digital_2_handler(SensorData reading, time_t now)
   if ( (timeinfo->tm_hour == 6 || timeinfo->tm_hour == 14 || timeinfo->tm_hour == 22)
       && timeinfo->tm_min == 0 && timeinfo->tm_sec < 10
   ) {
+    DEBUG_MSG("MISTING SYSTEM ACTIVE: %d:%d\n", timeinfo->tm_hour, timeinfo->tm_sec);
     return 1;
   }
   return 0;

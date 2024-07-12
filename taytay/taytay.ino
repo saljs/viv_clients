@@ -3,7 +3,7 @@
 #include <ESP8266WiFi.h>
 
 VivariumMonitor monitor;
-PIDController heat_controller(27.0, 10.9, 8.5, 3.2, 0.6);
+PIDController heat_controller(27.0, 8.9, 6.5, 3.2, 0.6);
 
 void setup() {
   DEBUG_MSG("Vivarium Monitor firmware " FIRMWARE_VERSION);
@@ -21,7 +21,7 @@ void setup() {
     .ntp_zone = "CST6CDT,M3.2.0,M11.1.0",
     .ntp_server = "pool.ntp.org",
     .stats_url = stats_url,
-    .stats_interval = 600,
+    .stats_interval = 300,
   };
  
   // Set hostname
