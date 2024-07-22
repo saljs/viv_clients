@@ -2,6 +2,9 @@
 #include <PIDController.h>
 #include <ESP8266WiFi.h>
 
+// Common handler functions
+#include <common_functions.h>
+
 VivariumMonitor monitor;
 PIDController heat_controller(40.0, 4.6, 2.5, 1.2, 0.8);
 
@@ -27,8 +30,8 @@ void setup() {
   // Set hostname
   WiFi.hostname(F("viv-monitor-donna"));
   // Set output handlers
-  monitor.setDigitalOneHandler(digital_1_handler);
-  monitor.setDigitalTwoHandler(digital_2_handler);
+  monitor.setDigitalOneHandler(twelve_hour_on);
+  monitor.setDigitalTwoHandler(activate_misting_system);
   monitor.setAnalogHandler(analog_handler);
 
   // Initialize hardware
@@ -40,36 +43,13 @@ void loop() {
 }
 
 /*
- * Handler for UVB lamp:
- *   Turn on between 8am and 8pm
- */
-byte digital_1_handler(SensorData reading, time_t now)
-{
-  struct tm* timeinfo;
-  timeinfo = localtime(&now);
-  if (timeinfo->tm_hour > 7 && timeinfo->tm_hour < 20) {
-    return 1;
-  }
-  return 0;
-} 
-
-/*
- * Not used
- */
-byte digital_2_handler(SensorData reading, time_t now)
-{
-  return 0;
-}
-
-/*
  * Handler for halogen lamp
  *    Apply PID controller between 8am and 8pm
  */
 byte analog_handler(SensorData reading, time_t now)
 {
-  struct tm* timeinfo;
-  timeinfo = localtime(&now);
-  if (timeinfo->tm_hour > 7 && timeinfo->tm_hour < 20) {
+  if (twelve_hour_on(reading, now))
+  {
     return heat_controller.add_reading(reading.high_temp, reading.timestamp);
   }
   return 0;

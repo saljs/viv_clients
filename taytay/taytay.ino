@@ -2,6 +2,9 @@
 #include <PIDController.h>
 #include <ESP8266WiFi.h>
 
+// Common handler functions
+#include <common_functions.h>
+
 VivariumMonitor monitor;
 PIDController heat_controller(27.0, 8.9, 6.5, 3.2, 0.6);
 
@@ -27,7 +30,7 @@ void setup() {
   // Set hostname
   WiFi.hostname(F("viv-monitor-taytay")); 
   // Set output handlers
-  monitor.setDigitalOneHandler(digital_1_handler);
+  monitor.setDigitalOneHandler(twelve_hour_on);
   monitor.setDigitalTwoHandler(digital_2_handler);
   monitor.setAnalogHandler(analog_handler);
 
@@ -38,20 +41,6 @@ void setup() {
 void loop() {
   monitor.handle_events();
 }
-
-/*
- * Handler for LEDs:
- *   Turn on between 8am and 8pm
- */
-byte digital_1_handler(SensorData reading, time_t now)
-{
-  struct tm* timeinfo;
-  timeinfo = localtime(&now);
-  if (timeinfo->tm_hour > 7 && timeinfo->tm_hour < 20) {
-    return 1;
-  }
-  return 0;
-} 
 
 /*
  * Handler for mister:
