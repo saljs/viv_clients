@@ -6,7 +6,7 @@
 #include <common_functions.h>
 
 VivariumMonitor monitor;
-PIDController heat_controller(40.0, 8.2, 0, 2.2, 0.6);
+PIDController heat_controller(40.0, 12.6, 0.5, 0, 0.6);
 
 void setup() {
   DEBUG_MSG("Vivarium Monitor firmware " FIRMWARE_VERSION);
