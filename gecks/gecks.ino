@@ -6,7 +6,7 @@
 #include <common_functions.h>
 
 VivariumMonitor monitor;
-PIDController heat_controller(33.0, 8.6, 0.5, 2.2, 0.8);
+PIDController heat_controller(35, 8.6, 0.5, 2.2, 0.8);
 
 void setup() {
   DEBUG_MSG("Vivarium Monitor firmware " FIRMWARE_VERSION);
@@ -30,7 +30,7 @@ void setup() {
   // Set hostname
   WiFi.hostname(F("viv-monitor-gecks"));
   // Set output handlers
-  monitor.setDigitalOneHandler(twelve_hour_on);
+  monitor.setDigitalTwoHandler(twelve_hour_on);
   monitor.setAnalogHandler(analog_handler);
 
   // Initialize hardware
