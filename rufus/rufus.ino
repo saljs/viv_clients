@@ -31,7 +31,7 @@ void setup() {
   WiFi.hostname(F("viv-monitor-rufus"));
   // Set output handlers
   monitor.setDigitalOneHandler(twelve_hour_on);
-  monitor.setDigitalTwoHandler(activate_misting_system);
+  monitor.setDigitalTwoHandler(activate_misting_system); // 12 sec
   monitor.setAnalogHandler(analog_handler);
 
   // Initialize hardware
@@ -44,7 +44,7 @@ void loop() {
 
 /*
  * Handler for halogen lamp
- *    Apply PID controller between 8am and 8pm 
+ *    Apply PID controller between 8am and 8pm
  */
 byte analog_handler(SensorData reading, time_t now)
 {

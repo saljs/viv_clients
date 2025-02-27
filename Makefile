@@ -8,7 +8,6 @@ all: $(SRC_FILES)
 
 build:
 	mkdir -p build
-	mkdir -p build/cache
 
 $(SRC_FILES): build
 	$(eval FW_VERSION := $(basename $(notdir $@))-$(LIB_VERSION)-$(shell md5sum < "$@" | awk NF=1))
@@ -16,7 +15,6 @@ ifdef DEBUG
 	arduino-cli compile \
 		--library Common \
 		--library VivariumMonitor \
-		--build-cache-path ./build/cache \
 		--export-binaries \
 		--build-property "build.extra_flags=\"-DFIRMWARE_VERSION=\"debug_$(FW_VERSION)\"\"" \
 		--fqbn $(FQBN):lvl=CORE \
@@ -27,7 +25,6 @@ else
 	arduino-cli compile \
 		--library VivariumMonitor \
 		--library Common \
-		--build-cache-path ./build/cache \
 		--export-binaries \
 		--build-property "build.extra_flags=\"-DFIRMWARE_VERSION=\"$(FW_VERSION)\"\"" \
 		--fqbn $(FQBN) \
