@@ -44,14 +44,14 @@ void loop() {
 
 /*
  * Handler for mister:
- *   Turn on for 4 seconds at 9am and 9pm
+ *   Turn on for 8 seconds at 9am and 9pm
  */
 byte digital_2_handler(SensorData reading, time_t now)
 {
   struct tm* timeinfo;
   timeinfo = localtime(&now);
   if ( (timeinfo->tm_hour == 9 || timeinfo->tm_hour == 21)
-      && timeinfo->tm_min == 0 && timeinfo->tm_sec < 4
+      && timeinfo->tm_min == 0 && timeinfo->tm_sec < 8
   ) {
     return 1;    
   }
